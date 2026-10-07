@@ -1,0 +1,139 @@
+/*
+#########################
+# Course: COMP 2113 FA01, 2026
+# Assignment 3, Question 3
+# Author: Adedeji Al-ameen Oladunni Adeniyi Olayemi
+# Student ID: 0310392a
+# email address: 0310392a@acadiau.ca
+# Date: 2026-10-07
+# I certify that this code is my own.
+# I have not broken any rules concerning Academic Dishonesty.
+#########################
+*/
+public class TestLinkedList {
+
+    public static void main(String[] args) {
+
+        System.out.println("=================================");
+        System.out.println("SINGLY LINKED LIST TESTS");
+        System.out.println("=================================");
+
+        LinkedList list = new LinkedList();
+
+        // Test 1: Empty list
+        System.out.println("\nTest 1: Empty list");
+
+        list.traverse();
+
+        System.out.println("Size: " + list.size());
+
+        // Test 2: Add nodes to the end
+        System.out.println("\nTest 2: Add nodes to end");
+
+        list.add(10, "A");
+        list.add(20, "B");
+        list.add(30, "C");
+
+        list.traverse();
+
+        System.out.println("Size: " + list.size());
+
+        // Test 3: Insert at beginning
+        System.out.println("\nTest 3: Insert at beginning");
+
+        list.add(5, "Start", 0);
+
+        list.traverse();
+
+        // Test 4: Insert in middle
+        System.out.println("\nTest 4: Insert in middle");
+
+        list.add(15, "Middle", 2);
+
+        list.traverse();
+
+        // Test 5: Insert at end using position
+        System.out.println("\nTest 5: Insert at end using position");
+
+        list.add(40, "End", list.size());
+
+        list.traverse();
+
+        // Test 6: Traverse from middle
+        System.out.println("\nTest 6: Traverse from position 2");
+
+        list.traverseFrom(2);
+
+        // Test 7: Remove first node
+        System.out.println("\nTest 7: Remove first node");
+
+        Node removed = list.removeAt(0);
+
+        System.out.println("Removed: " + removed);
+        list.traverse();
+
+        // Test 8: Remove middle node
+        System.out.println("\nTest 8: Remove middle node");
+
+        removed = list.removeAt(2);
+
+        System.out.println("Removed: " + removed);
+        list.traverse();
+
+        // Test 9: Remove last node
+        System.out.println("\nTest 9: Remove last node");
+
+        removed = list.removeAt(list.size() - 1);
+
+        System.out.println("Removed: " + removed);
+        list.traverse();
+
+        // Test 10: Remove by value
+        System.out.println("\nTest 10: Remove by value");
+
+        removed = list.removeValue(20);
+
+        System.out.println("Removed: " + removed);
+        list.traverse();
+
+        // Test 11: Remove value that does not exist
+        System.out.println("\nTest 11: Remove missing value");
+
+        removed = list.removeValue(999);
+
+        if (removed == null) {
+            System.out.println("Value 999 was not found.");
+        }
+
+        // Test 12: Invalid insertion position
+        System.out.println("\nTest 12: Invalid insertion position");
+
+        try {
+            list.add(100, "Invalid", 999);
+        }
+        catch (IndexOutOfBoundsException e) {
+            System.out.println("Correctly caught: " + e.getMessage());
+        }
+
+        // Test 13: Invalid removal position
+        System.out.println("\nTest 13: Invalid removal position");
+
+        try {
+            list.removeAt(999);
+        }
+        catch (IndexOutOfBoundsException e) {
+            System.out.println("Correctly caught: " + e.getMessage());
+        }
+
+        // Test 14: Final list
+        System.out.println("\nFinal list:");
+
+        list.traverse();
+
+        System.out.println("\nFinal size: " + list.size());
+
+        System.out.println("\n=================================");
+        System.out.println("ALL SINGLY LINKED LIST TESTS COMPLETE");
+        System.out.println("=================================");
+    }
+}

@@ -1,0 +1,244 @@
+/*
+#########################
+# Course: COMP 2113 FA01, 2026
+# Assignment 3, Question 1
+# Author: Adedeji Al-ameen Oladunni Adeniyi Olayemi
+# Student ID: 0310392a
+# email address: 0310392a@acadiau.ca
+# Date: 2026-10-07
+# I certify that this code is my own.
+# I have not broken any rules concerning Academic Dishonesty.
+#########################
+*/
+public class LinkedList {
+
+    private Node head;
+    private Node tail;
+    private int size;
+
+    /**
+      Creates an empty linked list.
+     */
+    public LinkedList() {
+        head = null;
+        tail = null;
+        size = 0;
+    }
+
+    /**
+      Returns the number of nodes in the list.
+     */
+    public int size() {
+        return size;
+    }
+
+    /**
+     Adds a node to the end of the list.
+     */
+    public void add(int value, String label) {
+        add(value, label, size);
+    }
+
+    /**
+     * Adds a node at a specified position.
+     */
+    public void add(int value, String label, int position) {
+
+        if (position < 0 || position > size) {
+            throw new IndexOutOfBoundsException(
+                    "Invalid insertion position: " + position
+            );
+        }
+
+        Node newNode = new Node(value, label);
+
+        // Case 1: inserting into an empty list
+        if (size == 0) {
+            head = newNode;
+            tail = newNode;
+        }
+
+        // Case 2: inserting at the beginning
+        else if (position == 0) {
+            newNode.next = head;
+            head = newNode;
+        }
+
+        // Case 3: inserting somewhere else
+        else {
+            Node previous = head;
+
+            // Move to the node immediately before the insertion point
+            for (int i = 0; i < position - 1; i++) {
+                previous = previous.next;
+            }
+
+            newNode.next = previous.next;
+            previous.next = newNode;
+
+            // If inserted at the end, update tail
+            if (position == size) {
+                tail = newNode;
+            }
+        }
+
+        size++;
+    }
+
+    /**
+     * Removes the node at a specified position.
+     */
+    public Node removeAt(int position) {
+
+        if (position < 0 || position >= size) {
+            throw new IndexOutOfBoundsException(
+                    "Invalid removal position: " + position
+            );
+        }
+
+        Node removed;
+
+        // Removing the first node
+        if (position == 0) {
+
+            removed = head;
+            head = head.next;
+
+            // List became empty
+            if (size == 1) {
+                tail = null;
+            }
+        }
+
+        // Removing from somewhere other than the beginning
+        else {
+
+            Node previous = head;
+
+            for (int i = 0; i < position - 1; i++) {
+                previous = previous.next;
+            }
+
+            removed = previous.next;
+            previous.next = removed.next;
+
+            // Removing the last node
+            if (position == size - 1) {
+                tail = previous;
+            }
+        }
+
+        size--;
+
+        // Disconnect removed node from the list
+        removed.next = null;
+
+        return removed;
+    }
+    public Node removeValue(int value) {
+
+        if (head == null) {
+            return null;
+        }
+
+        // Removing head
+        if (head.value == value) {
+
+            Node removed = head;
+            head = head.next;
+            size--;
+
+            if (size == 0) {
+                tail = null;
+            }
+
+            removed.next = null;
+            return removed;
+        }
+
+        Node previous = head;
+        Node current = head.next;
+
+        while (current != null) {
+
+            if (current.value == value) {
+
+                previous.next = current.next;
+
+                if (current == tail) {
+                    tail = previous;
+                }
+
+                size--;
+                current.next = null;
+
+                return current;
+            }
+
+            previous = current;
+            current = current.next;
+        }
+
+        return null;
+    }
+    public void traverse() {
+        traverseFrom(0);
+    }
+    public void traverseFrom(int position) {
+
+        if (position < 0 || position >= size) {
+            if (size == 0 && position == 0) {
+                System.out.println("List is empty.");
+                return;
+            }
+
+            throw new IndexOutOfBoundsException(
+                    "Invalid traversal position: " + position
+            );
+        }
+
+        Node current = head;
+
+        // Move to starting position
+        for (int i = 0; i < position; i++) {
+            current = current.next;
+        }
+
+        // Traverse until the end
+        while (current != null) {
+            System.out.print(current + " -> ");
+            current = current.next;
+        }
+
+        System.out.println("null");
+    }
+
+    /**
+     * Returns a string representation of the list.
+     */
+    @Override
+    public String toString() {
+
+        if (head == null) {
+            return "[]";
+        }
+
+        StringBuilder result = new StringBuilder("[");
+        Node current = head;
+
+        while (current != null) {
+
+            result.append(current);
+
+            if (current.next != null) {
+                result.append(", ");
+            }
+
+            current = current.next;
+        }
+
+        result.append("]");
+
+        return result.toString();
+    }
+}
